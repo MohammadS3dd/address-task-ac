@@ -1,13 +1,17 @@
 <script setup>
-import { computed, onMounted } from "@vue/runtime-core";
+import { computed, defineAsyncComponent, onMounted } from "@vue/runtime-core";
 import axios from "axios";
 import Header from "./header.vue";
 import { ref, onBeforeUnmount } from "vue";
 import InfiniteLoading from "v3-infinite-loading";
 import "v3-infinite-loading/lib/style.css";
-import addressBoxMobile from "./addressBoxMobile.vue";
-import addressBoxDesktop from "./addressBoxDesktop.vue";
 
+const addressBoxDesktop = defineAsyncComponent(() =>
+  import("./addressBoxDesktop.vue")
+);
+const addressBoxMobile = defineAsyncComponent(() =>
+  import("./addressBoxMobile.vue")
+);
 const addresses = ref([]);
 const windowWidth = ref(window.innerWidth);
 const isDesktop = computed(() => windowWidth.value > 768);
